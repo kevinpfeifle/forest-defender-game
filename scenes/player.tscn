@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://tb3t0ldrwiju"]
 
-[ext_resource type="Script" path="res://scripts/character.gd" id="1_0jdh4"]
-[ext_resource type="Texture2D" uid="uid://j6krf45ck1rq" path="res://assets/sprites/squirrel-temp/idle.png" id="1_atfec"]
+[ext_resource type="Script" path="res://scripts/player/player.gd" id="1_dvyin"]
+[ext_resource type="Texture2D" uid="uid://j6krf45ck1rq" path="res://assets/sprites/squirrel-temp/idle.png" id="2_k3ipr"]
 
 [sub_resource type="Animation" id="Animation_qjfy8"]
 resource_name = "idle"
@@ -44,12 +44,12 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p0bor"]
 size = Vector2(13, 20)
 
-[node name="Character" type="CharacterBody2D"]
-script = ExtResource("1_0jdh4")
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_dvyin")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -19)
-texture = ExtResource("1_atfec")
+texture = ExtResource("2_k3ipr")
 hframes = 8
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
