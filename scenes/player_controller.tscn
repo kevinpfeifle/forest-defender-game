@@ -1,8 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://bhy7r7rwch1pr"]
+[gd_scene load_steps=3 format=3 uid="uid://bhy7r7rwch1pr"]
 
 [ext_resource type="PackedScene" uid="uid://tb3t0ldrwiju" path="res://scenes/player.tscn" id="1_d2n3t"]
 [ext_resource type="Script" path="res://scripts/player/camera.gd" id="2_dw7ge"]
-[ext_resource type="Script" path="res://scripts/player/player.gd" id="3_xjfvy"]
 
 [node name="PlayerController" type="Node2D"]
 
@@ -12,4 +11,3 @@ script = ExtResource("2_dw7ge")
 player = NodePath("../Player")
 
 [node name="Player" parent="." instance=ExtResource("1_d2n3t")]
-script = ExtResource("3_xjfvy")
