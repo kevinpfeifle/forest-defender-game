@@ -1,12 +1,11 @@
 class_name PlayerCamera
 extends Camera2D
 
-@export var player: Player
-
 @export_range(0.0, 1.0) var zoom_speed: float = 0.25
 @export_range(1, 10) var max_zoom: int = 2
 @export_range(100, 1000) var camera_speed: int = 400
 
+@export var player: Player
 var player_last_pos: Vector2
 
 var camera_position: Vector2
