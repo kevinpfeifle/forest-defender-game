@@ -14,10 +14,10 @@ func physics_update(_delta: float) -> void:
 
 ## Returns the name of the next state based on user input actions. Empty string = no change.
 func _check_for_state_change() -> StringName:
-	if Input.is_action_just_pressed("player_jump"):
-		return "jump"
-	elif not player.is_on_floor() && player.velocity.y >= 0:
+	if not player.is_on_floor() && player.velocity.y >= 0:
 		return "fall"
+	elif player.is_on_floor() && Input.is_action_just_pressed("player_jump"):
+		return "jump"
 	elif player.is_on_floor() && Input.get_axis("player_left", "player_right") != 0:
 		return "move"
 	elif player.velocity == Vector2(0, 0):

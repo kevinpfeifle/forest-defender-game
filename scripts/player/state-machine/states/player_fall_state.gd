@@ -21,15 +21,13 @@ func exit() -> void:
 
 ## Fall state overrides the default state change logic due to coyote time interactions with jumping.
 func physics_update(delta) -> void:
-	# Handle state change.
-	var new_state = _check_for_state_change()
-	if new_state != state_name && new_state != "":
-		if new_state == "jump" && grace_jump:
-			transition.emit(new_state, [state_name])
-			grace_jump = false
-			player.coyote_timer.stop()
-		elif new_state != "jump":
-			transition.emit(new_state, [state_name])
+	super(delta)
+	
+	var attempted_jump: bool = Input.is_action_just_pressed("player_jump")
+	if attempted_jump && grace_jump:
+		transition.emit("jump", [state_name])
+		grace_jump = false
+		player.coyote_timer.stop()
 	
 	# Handling falling if the state doesn't change.
 	if not player.is_on_floor():
