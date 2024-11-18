@@ -161,13 +161,14 @@ position = Vector2(-0.5, -10)
 shape = SubResource("RectangleShape2D_p0bor")
 
 [node name="DebugLabel" type="Label" parent="."]
-offset_left = -220.0
-offset_top = -340.0
-offset_right = 255.0
-offset_bottom = -287.0
+offset_left = -235.0
+offset_top = -375.0
+offset_right = 240.0
+offset_bottom = -243.0
 theme_override_font_sizes/font_size = 30
 text = "Current State: Idle
-Velocity: (0,0)"
+Velocity: (0,0)
+Buffed Input: None"
 
 [node name="InputBufferTimer" type="Timer" parent="."]
 wait_time = 0.2
