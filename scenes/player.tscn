@@ -49,13 +49,15 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p0bor"]
 size = Vector2(13, 20)
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("animation_player", "coyote_timer", "input_buffer_timer", "sprite")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("animation_player", "coyote_timer", "debug_label", "input_buffer_timer", "sprite", "state_machine")]
 scale = Vector2(0.2, 0.2)
 script = ExtResource("1_dvyin")
 animation_player = NodePath("AnimationPlayer")
 coyote_timer = NodePath("CoyoteTimer")
+debug_label = NodePath("DebugLabel")
 input_buffer_timer = NodePath("InputBufferTimer")
 sprite = NodePath("Sprite2D")
+state_machine = NodePath("StateMachine")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -162)
@@ -71,6 +73,15 @@ libraries = {
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, -10)
 shape = SubResource("RectangleShape2D_p0bor")
+
+[node name="DebugLabel" type="Label" parent="."]
+offset_left = -220.0
+offset_top = -340.0
+offset_right = 255.0
+offset_bottom = -287.0
+theme_override_font_sizes/font_size = 30
+text = "Current State: Idle
+Velocity: (0,0)"
 
 [node name="InputBufferTimer" type="Timer" parent="."]
 
