@@ -16,9 +16,9 @@ func physics_update(_delta: float) -> void:
 func _check_for_state_change() -> StringName:
 	if Input.is_action_just_pressed("player_jump"):
 		return "jump"
-	elif not player.is_on_floor():
+	elif not player.is_on_floor() && player.velocity.y >= 0:
 		return "fall"
-	elif Input.get_axis("player_left", "player_right") != 0:
+	elif player.is_on_floor() && Input.get_axis("player_left", "player_right") != 0:
 		return "move"
 	elif player.velocity == Vector2(0, 0):
 		return "idle"
