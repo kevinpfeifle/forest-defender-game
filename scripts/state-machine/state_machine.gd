@@ -24,7 +24,7 @@ func on_child_transition(new_state: StringName, args: Array) -> void:
 	var next_state = states.get(new_state.to_lower())
 	if (next_state != null and next_state != current_state):
 		current_state.exit()
-		next_state.enter(args)
 		current_state = next_state
+		next_state.enter(args)
 	else:
 		push_warning("Called transition on a state that does not exist")

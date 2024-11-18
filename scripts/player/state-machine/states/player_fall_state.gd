@@ -8,6 +8,7 @@ func _ready() -> void:
 
 ## Args[0] should be the name of the previous state.
 func enter(args: Array) -> void:
+	super(args)
 	# Handle Coyote Time if this is a natural fall.
 	if args[0] != "jump":
 		player.coyote_timer.timeout.connect(_on_coyote_timer_timeout)
@@ -25,9 +26,13 @@ func physics_update(delta) -> void:
 	
 	var attempted_jump: bool = Input.is_action_just_pressed("player_jump")
 	if attempted_jump && grace_jump:
-		transition.emit("jump", [state_name])
 		grace_jump = false
 		player.coyote_timer.stop()
+		transition.emit("jump", [state_name])
+	elif attempted_jump && !grace_jump:
+		# Buffer the jump and start the timer.
+		player.input_buffer_timer.start()
+		player.buffered_input = "jump"
 	
 	# Handling falling if the state doesn't change.
 	if not player.is_on_floor():

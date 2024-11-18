@@ -11,6 +11,9 @@ extends CharacterBody2D
 const SPEED = 300.0
 const JUMP_VELOCITY = -500.0
 
+## Inputs can be buffered for 200ms.
+var buffered_input: StringName
+
 func _process(_delta) -> void:
 	if velocity.x > 0:
 		sprite.scale.x = -1
@@ -22,3 +25,6 @@ func _process(_delta) -> void:
 
 func _physics_process(_delta: float) -> void:
 	move_and_slide()
+
+func _on_input_buffer_timer_timeout() -> void:
+	buffered_input = "" # Clear the input buffer it isn't consumed in 200ms.

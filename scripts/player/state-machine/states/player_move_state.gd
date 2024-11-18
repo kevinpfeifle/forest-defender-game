@@ -4,7 +4,8 @@ extends PlayerState
 func _ready() -> void:
 	state_name = "move"
 
-func enter(_args: Array) -> void:
+func enter(args: Array) -> void:
+	super(args)
 	player.animation_player.play("move")
 
 func physics_update(delta) -> void:
