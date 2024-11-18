@@ -1,15 +1,37 @@
 class_name PlayerFallState
 extends PlayerState
 
+var grace_jump: bool = false
+
 func _ready() -> void:
 	state_name = "fall"
 
-func enter(_args: Array) -> void:
-	player.animation_player.play("fall")
+## Args[0] should be the name of the previous state.
+func enter(args: Array) -> void:
+	# Handle Coyote Time if this is a natural fall.
+	if args[0] != "jump":
+		player.coyote_timer.timeout.connect(_on_coyote_timer_timeout)
+		player.coyote_timer.start()
+		grace_jump = true
 
+func exit() -> void:
+	player.coyote_timer.stop()
+	player.coyote_timer.timeout.disconnect(_on_coyote_timer_timeout)
+	grace_jump = false
+
+## Fall state overrides the default state change logic due to coyote time interactions with jumping.
 func physics_update(delta) -> void:
-	super(delta)
+	# Handle state change.
+	var new_state = _check_for_state_change()
+	if new_state != state_name && new_state != "":
+		if new_state == "jump" && grace_jump:
+			transition.emit(new_state, [state_name])
+			grace_jump = false
+			player.coyote_timer.stop()
+		elif new_state != "jump":
+			transition.emit(new_state, [state_name])
 	
+	# Handling falling if the state doesn't change.
 	if not player.is_on_floor():
 		player.velocity += player.get_gravity() * delta
 
@@ -18,3 +40,7 @@ func physics_update(delta) -> void:
 		player.velocity.x = direction * player.SPEED
 	else:
 		player.velocity.x = move_toward(player.velocity.x, 0, player.SPEED)
+
+func _on_coyote_timer_timeout() -> void:
+	player.animation_player.play("fall") # Play the fall animation once we are sure we won't jump.
+	grace_jump = false

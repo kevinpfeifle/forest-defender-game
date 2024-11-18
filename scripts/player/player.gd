@@ -2,6 +2,8 @@ class_name Player
 extends CharacterBody2D
 
 @export var animation_player: AnimationPlayer
+@export var coyote_timer: Timer
+@export var input_buffer_timer: Timer
 @export var sprite: Sprite2D
 
 const SPEED = 300.0
