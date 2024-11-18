@@ -12,8 +12,8 @@ var state_name: StringName
 func enter(_args: Array) -> void:
 	pass
 
-## The State's breakdown function.
-func exit() -> void:
+## The State's breakdown function. A reference to the new state is passed to help with logic.
+func exit(_new_state: StringName) -> void:
 	pass
 
 ## Mimics _process for the State, and gets called by StateMachine if this is the active State.

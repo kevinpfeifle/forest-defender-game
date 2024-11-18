@@ -6,4 +6,6 @@ func _ready() -> void:
 
 func enter(args: Array) -> void:
 	super(args)
-	player.animation_player.play("idle")
+	
+	if !skip_state:
+		player.animation_player.queue("idle")

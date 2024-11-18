@@ -20,8 +20,8 @@ func _process(_delta) -> void:
 	elif velocity.x < 0:
 		sprite.scale.x = 1
 
-	debug_label.text = "Current State: %s\nVelocity: %s\nBuffered Input: %s" % \
-		[state_machine.current_state.state_name, velocity, buffered_input]
+	debug_label.text = "Current State: %s\nVelocity: %s\nBuffered Input: %s\nCurrent Animation: %s" % \
+		[state_machine.current_state.state_name, velocity, buffered_input, animation_player.current_animation]
 
 func _physics_process(_delta: float) -> void:
 	move_and_slide()

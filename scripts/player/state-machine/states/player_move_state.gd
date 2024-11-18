@@ -6,7 +6,14 @@ func _ready() -> void:
 
 func enter(args: Array) -> void:
 	super(args)
-	player.animation_player.play("move")
+	
+	if !skip_state:
+		player.animation_player.play("move_start", -1, 2)
+		player.animation_player.queue("move")
+
+func exit(new_state: StringName) -> void:
+	if new_state == "idle":
+		player.animation_player.play("move_stop", -1, 2)
 
 func physics_update(delta) -> void:
 	super(delta)

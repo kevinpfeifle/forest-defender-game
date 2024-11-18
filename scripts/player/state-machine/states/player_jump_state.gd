@@ -6,12 +6,17 @@ func _ready() -> void:
 
 func enter(args: Array) -> void:
 	super(args)
-	player.animation_player.play("jump")
+	# player.animation_player.animation_finished.connect(_on_animation_finished)
+	player.animation_player.play("jump_start", -1, 2.5)
+	player.animation_player.queue("jump_airborne")
 	player.velocity.y = player.JUMP_VELOCITY
 
-func physics_update(delta) -> void:
+func exit(_new_state: StringName) -> void:
+	player.animation_player.stop()
+
+func physics_update(delta) -> void: 
 	super(delta)
-	
+
 	if Input.is_action_just_pressed("player_jump"):
 		# There is no double-jumping, so buffer the jump and start the timer.
 		player.input_buffer_timer.start()

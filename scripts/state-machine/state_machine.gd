@@ -23,7 +23,7 @@ func _physics_process(delta) -> void:
 func on_child_transition(new_state: StringName, args: Array) -> void:
 	var next_state = states.get(new_state.to_lower())
 	if (next_state != null and next_state != current_state):
-		current_state.exit()
+		current_state.exit(new_state)
 		current_state = next_state
 		next_state.enter(args)
 	else:

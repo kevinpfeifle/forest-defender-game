@@ -9,13 +9,20 @@ func _ready() -> void:
 ## Args[0] should be the name of the previous state.
 func enter(args: Array) -> void:
 	super(args)
-	# Handle Coyote Time if this is a natural fall.
+	
+	# Setup Coyote Time if this is a natural fall.
 	if args[0] != "jump":
 		player.coyote_timer.timeout.connect(_on_coyote_timer_timeout)
 		player.coyote_timer.start()
 		grace_jump = true
+	else:
+		player.animation_player.play("fall_start_jump")
+		player.animation_player.queue("fall")
+		grace_jump = false
 
-func exit() -> void:
+func exit(_new_state: StringName) -> void:
+	# Teardown the coyote timer.
+	player.animation_player.stop()
 	player.coyote_timer.stop()
 	player.coyote_timer.timeout.disconnect(_on_coyote_timer_timeout)
 	grace_jump = false
@@ -45,5 +52,6 @@ func physics_update(delta) -> void:
 		player.velocity.x = move_toward(player.velocity.x, 0, player.SPEED)
 
 func _on_coyote_timer_timeout() -> void:
-	player.animation_player.play("fall") # Play the fall animation once we are sure we won't jump.
+	player.animation_player.play("fall_start_ground")
+	player.animation_player.queue("fall") # Play the fall animation once we are sure we won't jump.
 	grace_jump = false
