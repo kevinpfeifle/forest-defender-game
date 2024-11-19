@@ -1,6 +1,7 @@
 class_name PlayerFallState
 extends PlayerState
 
+var air_time: float = 0.0
 var grace_jump: bool = false
 
 func _ready() -> void:
@@ -21,6 +22,8 @@ func enter(args: Array) -> void:
 		grace_jump = false
 
 func exit(_new_state: StringName) -> void:
+	air_time = 0.0
+	
 	# Teardown the coyote timer.
 	player.animation_player.stop()
 	player.coyote_timer.stop()
@@ -41,9 +44,10 @@ func physics_update(delta) -> void:
 		player.input_buffer_timer.start()
 		player.buffered_input = "jump"
 	
-	# Handling falling if the state doesn't change.
-	if not player.is_on_floor():
-		player.velocity += player.get_gravity() * delta
+	# Handling falling if the state doesn't change. Gravity will get stronger the longer the fall.
+	if not player.is_on_floor(): 
+		player.velocity += player.get_gravity() * delta * (1.25 + air_time)
+	air_time += delta
 
 	var direction: float = Input.get_axis("player_left", "player_right")
 	if direction:
