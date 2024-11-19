@@ -338,7 +338,7 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p0bor"]
 size = Vector2(90, 165)
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("animation_player", "coyote_timer", "debug_label", "input_buffer_timer", "jump_timer", "sprite", "state_machine")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("animation_player", "coyote_timer", "debug_label", "input_buffer_timer", "sprite", "state_machine")]
 scale = Vector2(0.2, 0.2)
 collision_layer = 2
 script = ExtResource("1_dvyin")
@@ -346,7 +346,6 @@ animation_player = NodePath("AnimationPlayer")
 coyote_timer = NodePath("CoyoteTimer")
 debug_label = NodePath("DebugLabel")
 input_buffer_timer = NodePath("InputBufferTimer")
-jump_timer = NodePath("JumpTimer")
 sprite = NodePath("Sprite2D")
 state_machine = NodePath("StateMachine")
 
@@ -385,9 +384,6 @@ one_shot = true
 [node name="CoyoteTimer" type="Timer" parent="."]
 wait_time = 0.2
 one_shot = true
-
-[node name="JumpTimer" type="Timer" parent="."]
-wait_time = 0.1
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("player", "current_state")]
 script = ExtResource("3_vkoqv")
