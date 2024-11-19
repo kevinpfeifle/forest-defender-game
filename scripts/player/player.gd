@@ -8,8 +8,9 @@ extends CharacterBody2D
 @export var sprite: Sprite2D
 @export var state_machine: StateMachine
 
-const SPEED = 300.0
-const JUMP_VELOCITY = -500.0
+const SPEED: float = 300.0
+const JUMP_VELOCITY: float = -500.0
+const JUMP_CLIP_VELOCITY: float = -250.0
 
 ## Inputs can be buffered for 200ms.
 var buffered_input: StringName = ""
