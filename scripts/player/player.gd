@@ -15,12 +15,22 @@ const JUMP_CLIP_VELOCITY: float = -250.0
 ## Inputs can be buffered for 200ms.
 var buffered_input: StringName = ""
 var can_climb: bool = false
+var collide_one_way = true
 
 func _process(_delta) -> void:
 	debug_label.text = "Current State: %s\nVelocity: %s\nBuffered Input: %s\nCurrent Animation: %s\nCan Climb: %s" % \
 		[state_machine.current_state.state_name, velocity, buffered_input, animation_player.current_animation, can_climb]
 
 func _physics_process(_delta: float) -> void:
+	if Input.is_action_just_pressed("player_down"):
+		# Ignore collisions with one-way platforms
+		collide_one_way = false
+		set_one_way_collision_detection(collide_one_way)
+	elif Input.is_action_just_released("player_down"):
+		# Re-enable collisions with one-way platforms
+		collide_one_way = true
+		set_one_way_collision_detection(collide_one_way)
+
 	move_and_slide()
 
 func _on_input_buffer_timer_timeout() -> void:
@@ -31,3 +41,7 @@ func set_facing_direction() -> void:
 		sprite.scale.x = -1
 	elif velocity.x < 0:
 		sprite.scale.x = 1
+
+func set_one_way_collision_detection(collide: bool) -> void:
+	# Layer 2 is the one-way platform layer.
+	set_collision_mask_value(2, collide)
