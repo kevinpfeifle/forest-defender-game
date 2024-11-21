@@ -679,8 +679,10 @@ _data = {
 size = Vector2(90, 165)
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("animation_player", "coyote_timer", "debug_label", "input_buffer_timer", "sprite", "state_machine")]
+z_index = 2
 scale = Vector2(0.2, 0.2)
-collision_layer = 2
+collision_layer = 4
+collision_mask = 3
 script = ExtResource("1_dvyin")
 animation_player = NodePath("AnimationPlayer")
 coyote_timer = NodePath("CoyoteTimer")

@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://yw8y76a3v30a"]
+[gd_scene load_steps=8 format=3 uid="uid://yw8y76a3v30a"]
 
 [ext_resource type="Script" path="res://scripts/enemies/troll/troll.gd" id="1_0s5wj"]
 [ext_resource type="Texture2D" uid="uid://ckl2tnjkem5oo" path="res://assets/sprites/troll/troll-idle.png" id="1_jmey4"]
+[ext_resource type="Script" path="res://scripts/climable.gd" id="3_ha1hf"]
 
 [sub_resource type="Animation" id="Animation_mw0ie"]
 length = 0.001
@@ -65,9 +66,12 @@ _data = {
 "idle": SubResource("Animation_34i43")
 }
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_erqh7"]
+size = Vector2(446.875, 12.5002)
+
 [node name="Troll" type="CharacterBody2D" node_paths=PackedStringArray("animation_player", "sprite")]
 scale = Vector2(0.2, 0.2)
-collision_layer = 4
+collision_layer = 8
 script = ExtResource("1_0s5wj")
 animation_player = NodePath("AnimationPlayer")
 sprite = NodePath("Sprite")
@@ -85,3 +89,21 @@ libraries = {
 
 [node name="Hitbox" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(0, 0, -350, 0, -350, -65, -310, -75, -265, -90, -260, -180, -260, -375, -270, -500, -300, -550, -300, -620, -290, -700, -280, -770, -265, -815, -135, -840, 30, -840, 190, -815, 225, -720, 250, -605, 260, -500, 240, -385, 230, -280, 190, -180, 160, -90, 125, 0)
+
+[node name="Climbable" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("3_ha1hf")
+
+[node name="ClimbableArea" type="CollisionPolygon2D" parent="Climbable"]
+polygon = PackedVector2Array(25, -200, 35, -375, 35, -655, 210, -650, 250, -590, 250, -455, 250, -335, 190, -200)
+
+[node name="Standable" type="StaticBody2D" parent="."]
+collision_layer = 2
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Standable"]
+position = Vector2(-28.4375, -680)
+scale = Vector2(0.999999, 0.999999)
+shape = SubResource("RectangleShape2D_erqh7")
+one_way_collision = true
