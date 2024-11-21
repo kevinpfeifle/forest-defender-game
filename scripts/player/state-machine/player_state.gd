@@ -40,7 +40,7 @@ func _check_for_state_change() -> StringName:
 	if (player.is_on_floor() || state_name == "climb") && Input.is_action_just_pressed("player_jump"):
 		return "jump"
 
-	if player.can_climb && (state_name == "climb" || Input.is_action_pressed("player_up")):
+	if player.can_climb && (state_name == "climb" || Input.is_action_pressed("player_up") || Input.is_action_pressed("player_down")):
 		return "climb"
 
 	if not player.is_on_floor() && player.velocity.y >= 0:
