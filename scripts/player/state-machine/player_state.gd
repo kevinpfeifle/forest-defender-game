@@ -29,18 +29,29 @@ func enter(_args) -> void:
 
 ## Default abstract logic simply handles state changes.
 func physics_update(_delta: float) -> void:
+	if !active:
+		return
 	var new_state = _check_for_state_change()
 	if new_state != state_name && new_state != "":
 		transition.emit(new_state, [state_name]) # All states get the previous state sent as first arg.
 
 ## Returns the name of the next state based on user input actions. Empty string = no change.
 func _check_for_state_change() -> StringName:
+	if (player.is_on_floor() || state_name == "climb") && Input.is_action_just_pressed("player_jump"):
+		return "jump"
+
+	if player.can_climb && (state_name == "climb" || Input.is_action_pressed("player_up")):
+		return "climb"
+
 	if not player.is_on_floor() && player.velocity.y >= 0:
 		return "fall"
-	elif player.is_on_floor() && Input.is_action_just_pressed("player_jump"):
-		return "jump"
-	elif player.is_on_floor() && Input.get_axis("player_left", "player_right") != 0:
+	elif not player.is_on_floor() && (!player.can_climb && state_name == "climb"):
+		return "fall"
+
+	if player.is_on_floor() && Input.get_axis("player_left", "player_right") != 0:
 		return "move"
-	elif player.velocity == Vector2(0, 0):
+	
+	if player.is_on_floor() && player.velocity == Vector2(0, 0):
 		return "idle"
+	
 	return ""
