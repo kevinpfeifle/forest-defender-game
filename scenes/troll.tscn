@@ -1,0 +1,87 @@
+[gd_scene load_steps=6 format=3 uid="uid://yw8y76a3v30a"]
+
+[ext_resource type="Script" path="res://scripts/enemies/troll/troll.gd" id="1_0s5wj"]
+[ext_resource type="Texture2D" uid="uid://ckl2tnjkem5oo" path="res://assets/sprites/troll/troll-idle.png" id="1_jmey4"]
+
+[sub_resource type="Animation" id="Animation_mw0ie"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(3.8147e-06, -420)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_34i43"]
+resource_name = "idle"
+length = 0.8
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(3.8147e-06, -420)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kygt5"]
+_data = {
+"RESET": SubResource("Animation_mw0ie"),
+"idle": SubResource("Animation_34i43")
+}
+
+[node name="Troll" type="CharacterBody2D" node_paths=PackedStringArray("animation_player", "sprite")]
+scale = Vector2(0.2, 0.2)
+collision_layer = 4
+script = ExtResource("1_0s5wj")
+animation_player = NodePath("AnimationPlayer")
+sprite = NodePath("Sprite")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(3.8147e-06, -420)
+texture = ExtResource("1_jmey4")
+hframes = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Sprite")
+libraries = {
+"": SubResource("AnimationLibrary_kygt5")
+}
+
+[node name="Hitbox" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(0, 0, -350, 0, -350, -65, -310, -75, -265, -90, -260, -180, -260, -375, -270, -500, -300, -550, -300, -620, -290, -700, -280, -770, -265, -815, -135, -840, 30, -840, 190, -815, 225, -720, 250, -605, 260, -500, 240, -385, 230, -280, 190, -180, 160, -90, 125, 0)
