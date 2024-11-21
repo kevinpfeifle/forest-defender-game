@@ -679,7 +679,8 @@ _data = {
 size = Vector2(90, 165)
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("animation_player", "coyote_timer", "debug_label", "input_buffer_timer", "sprite", "state_machine")]
-z_index = 2
+z_index = 1
+z_as_relative = false
 scale = Vector2(0.2, 0.2)
 collision_layer = 4
 collision_mask = 3
@@ -692,6 +693,8 @@ sprite = NodePath("Sprite")
 state_machine = NodePath("StateMachine")
 
 [node name="Sprite" type="Sprite2D" parent="."]
+z_index = 1
+z_as_relative = false
 position = Vector2(3.38813e-21, -60)
 texture = ExtResource("2_153od")
 hframes = 17
