@@ -17,9 +17,13 @@ func exit(new_state: StringName) -> void:
 
 func physics_update(delta) -> void:
 	super(delta)
-	
+	if !active:
+		return
+		
 	var direction: float = Input.get_axis("player_left", "player_right")
 	if direction:
 		player.velocity.x = direction * player.SPEED
 	else:
 		player.velocity.x = move_toward(player.velocity.x, 0, player.SPEED)
+
+	player.set_facing_direction()

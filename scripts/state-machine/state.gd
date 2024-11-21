@@ -6,6 +6,7 @@ extends Node
 @warning_ignore("unused_signal") # The children of State consume this. 
 signal transition(new_state: StringName)
 
+var active: bool = false
 var state_name: StringName
 
 ## The State's setup function.

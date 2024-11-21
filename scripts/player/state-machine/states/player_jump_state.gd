@@ -6,7 +6,6 @@ func _ready() -> void:
 
 func enter(args: Array) -> void:
 	super(args)
-	# player.animation_player.animation_finished.connect(_on_animation_finished)
 	player.animation_player.play("jump_start", -1, 2.5)
 	player.animation_player.queue("jump_airborne")
 	if Input.is_action_just_released("player_jump"):
@@ -19,6 +18,8 @@ func exit(_new_state: StringName) -> void:
 
 func physics_update(delta) -> void: 
 	super(delta)
+	if !active:
+		return
 
 	if Input.is_action_just_released("player_jump") && player.velocity.y < player.JUMP_CLIP_VELOCITY:
 		player.velocity.y = player.JUMP_CLIP_VELOCITY
@@ -31,3 +32,5 @@ func physics_update(delta) -> void:
 		player.velocity.x = direction * player.SPEED
 	else:
 		player.velocity.x = move_toward(player.velocity.x, 0, player.SPEED)
+
+	player.set_facing_direction()

@@ -23,9 +23,9 @@ func enter(args: Array) -> void:
 
 func exit(_new_state: StringName) -> void:
 	air_time = 0.0
+	player.animation_player.stop()
 	
 	# Teardown the coyote timer.
-	player.animation_player.stop()
 	player.coyote_timer.stop()
 	player.coyote_timer.timeout.disconnect(_on_coyote_timer_timeout)
 	grace_jump = false
@@ -33,12 +33,15 @@ func exit(_new_state: StringName) -> void:
 ## Fall state overrides the default state change logic due to coyote time interactions with jumping.
 func physics_update(delta) -> void:
 	super(delta)
+	if !active:
+		return
 	
 	var attempted_jump: bool = Input.is_action_just_pressed("player_jump")
 	if attempted_jump && grace_jump:
 		grace_jump = false
 		player.coyote_timer.stop()
 		transition.emit("jump", [state_name])
+		return
 	elif attempted_jump && !grace_jump:
 		# Buffer the jump and start the timer.
 		player.input_buffer_timer.start()
@@ -54,6 +57,8 @@ func physics_update(delta) -> void:
 		player.velocity.x = direction * player.SPEED
 	else:
 		player.velocity.x = move_toward(player.velocity.x, 0, player.SPEED)
+
+	player.set_facing_direction()
 
 func _on_coyote_timer_timeout() -> void:
 	player.animation_player.play("fall_start_ground")
