@@ -20,6 +20,9 @@ func physics_update(delta) -> void:
 	if !active:
 		return
 		
+	if not player.is_on_floor():
+		player.velocity += player.get_gravity() * delta
+		
 	var direction: float = Input.get_axis("player_left", "player_right")
 	if direction:
 		player.velocity.x = direction * player.SPEED

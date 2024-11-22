@@ -17,7 +17,7 @@ func enter(args) -> void:
 
 func exit(new_state: StringName) -> void:
 	if new_state == "idle":
-		player.animation_player.stop() # TODO: FIX SO THIS GOES TO IDLE
+		player.animation_player.stop()
 	else:
 		player.animation_player.play("fall_start_ground")
 	# While rotated 90 degrees, the x and y were flipped. Set it back to normal.

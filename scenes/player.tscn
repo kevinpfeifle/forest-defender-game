@@ -675,15 +675,16 @@ _data = {
 "move_stop": SubResource("Animation_o3842")
 }
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_p0bor"]
-size = Vector2(90, 165)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kxrw8"]
+radius = 55.0
+height = 175.0
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("animation_player", "coyote_timer", "debug_label", "input_buffer_timer", "sprite", "state_machine")]
 z_index = 1
 z_as_relative = false
 scale = Vector2(0.2, 0.2)
 collision_layer = 4
-collision_mask = 3
+collision_mask = 19
 script = ExtResource("1_dvyin")
 animation_player = NodePath("AnimationPlayer")
 coyote_timer = NodePath("CoyoteTimer")
@@ -693,8 +694,6 @@ sprite = NodePath("Sprite")
 state_machine = NodePath("StateMachine")
 
 [node name="Sprite" type="Sprite2D" parent="."]
-z_index = 1
-z_as_relative = false
 position = Vector2(3.38813e-21, -60)
 texture = ExtResource("2_153od")
 hframes = 17
@@ -707,8 +706,8 @@ libraries = {
 }
 
 [node name="Hitbox" type="CollisionShape2D" parent="."]
-position = Vector2(0, -82.5)
-shape = SubResource("RectangleShape2D_p0bor")
+position = Vector2(-9.53674e-07, -70)
+shape = SubResource("CapsuleShape2D_kxrw8")
 
 [node name="DebugLabel" type="Label" parent="."]
 offset_left = -235.0

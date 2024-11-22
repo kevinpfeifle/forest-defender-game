@@ -8,14 +8,15 @@ extends CharacterBody2D
 @export var sprite: Sprite2D
 @export var state_machine: StateMachine
 
-const SPEED: float = 300.0
+const DEFAULT_SORT_INDEX: int = 1
 const JUMP_VELOCITY: float = -500.0
 const JUMP_CLIP_VELOCITY: float = -250.0
+const SPEED: float = 300.0
 
-## Inputs can be buffered for 200ms.
-var buffered_input: StringName = ""
+var buffered_input: StringName = "" # Inputs can be buffered for 200ms.
 var can_climb: bool = false
-var collide_one_way = true
+var collide_one_way: bool = true
+var sort_locks: int = 0 # Used to prevent updating the player z_index. Count of number of areas preventing sorting.
 
 func _process(_delta) -> void:
 	debug_label.text = "Current State: %s\nVelocity: %s\nBuffered Input: %s\nCurrent Animation: %s\nCan Climb: %s" % \
