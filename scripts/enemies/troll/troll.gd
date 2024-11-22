@@ -20,8 +20,7 @@ func _on_troll_front_area_body_entered(body: Node2D) -> void:
 func _on_troll_front_area_body_exited(body:Node2D) -> void:
 	if body is Player:
 		var player: Player = body
-		if player.sort_locks == 0:
-			player.z_index = player.DEFAULT_SORT_INDEX
+		player.z_index = player.DEFAULT_SORT_INDEX
 
 func _on_troll_back_area_body_entered(body:Node2D) -> void:
 	if body is Player:

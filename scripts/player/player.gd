@@ -11,6 +11,7 @@ extends CharacterBody2D
 const DEFAULT_SORT_INDEX: int = 1
 const JUMP_VELOCITY: float = -500.0
 const JUMP_CLIP_VELOCITY: float = -250.0
+const ONE_WAY_PLATFORM_COLLISION_LAYER: int = 2
 const SPEED: float = 300.0
 
 var buffered_input: StringName = "" # Inputs can be buffered for 200ms.
@@ -44,5 +45,4 @@ func set_facing_direction() -> void:
 		sprite.scale.x = 1
 
 func set_one_way_collision_detection(collide: bool) -> void:
-	# Layer 2 is the one-way platform layer.
-	set_collision_mask_value(2, collide)
+	set_collision_mask_value(ONE_WAY_PLATFORM_COLLISION_LAYER, collide)
