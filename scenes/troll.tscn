@@ -1,11 +1,11 @@
-[gd_scene load_steps=18 format=3 uid="uid://yw8y76a3v30a"]
+[gd_scene load_steps=20 format=3 uid="uid://yw8y76a3v30a"]
 
 [ext_resource type="Script" path="res://scripts/enemies/troll/troll.gd" id="1_0s5wj"]
-[ext_resource type="Texture2D" uid="uid://cqpj4synayw6u" path="res://assets/sprites/troll/troll_sprite_sheet.png" id="2_36o3i"]
+[ext_resource type="Texture2D" uid="uid://dgq4u0bjah6by" path="res://assets/sprites/troll/troll_sprite_sheet.png" id="2_pj1t1"]
 [ext_resource type="Script" path="res://scripts/climable.gd" id="3_ha1hf"]
-[ext_resource type="Texture2D" uid="uid://dgb8lb6vefx56" path="res://assets/sprites/troll/troll-idle - Copy.png" id="3_sxm8h"]
 [ext_resource type="Script" path="res://scripts/enemies/troll/state-machine/troll_state_machine.gd" id="5_i5o88"]
 [ext_resource type="Script" path="res://scripts/enemies/troll/state-machine/states/troll_idle_state.gd" id="6_2v3q5"]
+[ext_resource type="Script" path="res://scripts/enemies/troll/state-machine/states/troll_march_state.gd" id="6_ww1ko"]
 
 [sub_resource type="Animation" id="Animation_mw0ie"]
 length = 0.001
@@ -36,7 +36,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("../BackLegSprite:frame")
+tracks/2/path = NodePath("..:process_mode")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -45,22 +45,11 @@ tracks/2/keys = {
 "update": 1,
 "values": [0]
 }
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("..:process_mode")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
 
-[sub_resource type="Animation" id="Animation_c6j1o"]
-resource_name = "death"
+[sub_resource type="Animation" id="Animation_8vg83"]
+resource_name = "attack_ahead"
 length = 0.6
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -68,10 +57,38 @@ tracks/0/path = NodePath(".:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [14, 15, 16, 17]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -468)]
+}
+
+[sub_resource type="Animation" id="Animation_c6j1o"]
+resource_name = "death"
+length = 0.85
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.5, 0.633333, 0.8),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [36, 37, 38, 39, 40, 41]
+"values": [42, 43, 44, 45, 46, 47]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -83,7 +100,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1e+06),
 "update": 0,
-"values": [Vector2(0, -422)]
+"values": [Vector2(0, -482)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -92,7 +109,7 @@ tracks/2/path = NodePath("..:process_mode")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0.5),
+"times": PackedFloat32Array(0.833333),
 "transitions": PackedFloat32Array(1e+06),
 "update": 1,
 "values": [4]
@@ -111,7 +128,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.1, 0.2),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
-"values": [30, 31, 32]
+"values": [35, 36, 37]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -123,7 +140,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1e+06),
 "update": 0,
-"values": [Vector2(0, -408)]
+"values": [Vector2(0, -460)]
 }
 
 [sub_resource type="Animation" id="Animation_34i43"]
@@ -152,19 +169,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1e+06),
 "update": 0,
-"values": [Vector2(0, -346)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("../BackLegSprite:frame")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 1,
-"values": [0, 1, 2, 3]
+"values": [Vector2(0, -420)]
 }
 
 [sub_resource type="Animation" id="Animation_kcci4"]
@@ -181,7 +186,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [6, 7, 8, 9, 10, 11]
+"values": [7, 8, 9, 10, 11, 12]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -193,12 +198,11 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1e+06),
 "update": 0,
-"values": [Vector2(0, -346)]
+"values": [Vector2(0, -420)]
 }
 
 [sub_resource type="Animation" id="Animation_a4jue"]
 resource_name = "stomp"
-loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -209,7 +213,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.2, 0.4, 0.8, 0.825),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
-"values": [24, 25, 26, 27, 28]
+"values": [28, 29, 30, 31, 32]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -221,7 +225,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1e+06),
 "update": 0,
-"values": [Vector2(0, -395)]
+"values": [Vector2(0, -438)]
 }
 tracks/2/type = "method"
 tracks/2/imported = false
@@ -241,6 +245,7 @@ tracks/2/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_kygt5"]
 _data = {
 "RESET": SubResource("Animation_mw0ie"),
+"attack_ahead": SubResource("Animation_8vg83"),
 "death": SubResource("Animation_c6j1o"),
 "hurt": SubResource("Animation_5x03b"),
 "idle": SubResource("Animation_34i43"),
@@ -250,6 +255,9 @@ _data = {
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_erqh7"]
 size = Vector2(285, 11.25)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n0pv7"]
+size = Vector2(285, 85)
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_61qq4"]
 friction = 0.0
@@ -261,12 +269,13 @@ size = Vector2(310, 530)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w35hg"]
 size = Vector2(225, 530)
 
-[node name="Troll" type="CharacterBody2D" node_paths=PackedStringArray("animation_player", "sprite")]
+[node name="Troll" type="CharacterBody2D" node_paths=PackedStringArray("debug_label", "animation_player", "sprite")]
 z_index = 2
 z_as_relative = false
 scale = Vector2(0.2, 0.2)
 collision_layer = 8
 script = ExtResource("1_0s5wj")
+debug_label = NodePath("DebugLabel")
 animation_player = NodePath("AnimationPlayer")
 sprite = NodePath("Sprite")
 
@@ -274,16 +283,10 @@ sprite = NodePath("Sprite")
 z_index = 2
 z_as_relative = false
 position = Vector2(0, -346)
-texture = ExtResource("2_36o3i")
-hframes = 6
+texture = ExtResource("2_pj1t1")
+hframes = 7
 vframes = 7
-
-[node name="BackLegSprite" type="Sprite2D" parent="."]
-visible = false
-z_as_relative = false
-position = Vector2(0, -420)
-texture = ExtResource("3_sxm8h")
-hframes = 4
+region_rect = Rect2(0, 0, 6000, 8000)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../Sprite")
@@ -293,34 +296,44 @@ libraries = {
 
 [node name="Hitbox" type="CollisionPolygon2D" parent="."]
 visible = false
+position = Vector2(100, 0)
 polygon = PackedVector2Array(0, 0, -350, 0, -350, -65, -310, -75, -265, -90, -260, -180, -260, -375, -270, -500, -300, -550, -300, -620, -290, -700, -280, -770, -265, -815, -135, -840, 30, -840, 190, -815, 225, -720, 250, -605, 260, -500, 240, -385, 230, -280, 190, -180, 160, -90, 125, 0)
 
 [node name="Climbable" type="Area2D" parent="."]
-collision_layer = 0
+collision_layer = 16
 collision_mask = 4
 script = ExtResource("3_ha1hf")
 
 [node name="ClimbableArea" type="CollisionPolygon2D" parent="Climbable"]
+position = Vector2(100, 0)
 polygon = PackedVector2Array(25, -200, 35, -375, 35, -655, 210, -650, 250, -590, 250, -455, 250, -335, 190, -200)
 
 [node name="Standable" type="StaticBody2D" parent="."]
-visible = false
 collision_layer = 2
 collision_mask = 4
 
 [node name="CollisionArea" type="CollisionShape2D" parent="Standable"]
-position = Vector2(-37.5, -735.625)
+position = Vector2(50, -740)
 scale = Vector2(0.999999, 0.999999)
 shape = SubResource("RectangleShape2D_erqh7")
 one_way_collision = true
 
+[node name="HeadDetectionBox" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 4
+
+[node name="DetectionArea" type="CollisionShape2D" parent="HeadDetectionBox"]
+position = Vector2(50, -792.5)
+shape = SubResource("RectangleShape2D_n0pv7")
+debug_color = Color(0.613235, 0.537606, 0, 0.42)
+
 [node name="CollisionBox" type="StaticBody2D" parent="."]
-visible = false
 collision_layer = 16
 collision_mask = 4
 physics_material_override = SubResource("PhysicsMaterial_61qq4")
 
 [node name="CollisionArea" type="CollisionPolygon2D" parent="CollisionBox"]
+position = Vector2(95, 0)
 polygon = PackedVector2Array(30, -200, -210, -200, -180, -375, -130, -505, -65, -615, 30, -730)
 
 [node name="TrollFrontArea" type="Area2D" parent="."]
@@ -328,19 +341,19 @@ collision_layer = 16
 collision_mask = 4
 
 [node name="SortArea" type="CollisionShape2D" parent="TrollFrontArea"]
-position = Vector2(-130, -465)
+position = Vector2(-35, -465)
 scale = Vector2(0.999999, 0.999999)
 shape = SubResource("RectangleShape2D_ajhxs")
+debug_color = Color(3.15256e-06, 0.650546, 0.0853975, 0.42)
 
 [node name="TrollBackArea" type="Area2D" parent="."]
-scale = Vector2(1, 1)
 collision_layer = 16
 collision_mask = 4
 
 [node name="SortArea" type="CollisionShape2D" parent="TrollBackArea"]
-position = Vector2(137.5, -465)
-scale = Vector2(1, 1)
+position = Vector2(240, -465)
 shape = SubResource("RectangleShape2D_w35hg")
+debug_color = Color(0.271103, 0.632637, 0, 0.42)
 
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("troll", "current_state")]
 script = ExtResource("5_i5o88")
@@ -350,6 +363,25 @@ current_state = NodePath("Idle")
 [node name="Idle" type="Node" parent="StateMachine"]
 script = ExtResource("6_2v3q5")
 
+[node name="March" type="Node" parent="StateMachine"]
+script = ExtResource("6_ww1ko")
+
+[node name="Move" type="Node" parent="StateMachine"]
+
+[node name="DebugLabel" type="Label" parent="."]
+offset_left = 420.0
+offset_top = -570.0
+offset_right = 512.0
+offset_bottom = -547.0
+theme_override_font_sizes/font_size = 43
+text = "Velocity: 0,0"
+
+[connection signal="body_entered" from="Climbable" to="." method="_on_climbable_body_entered"]
+[connection signal="body_exited" from="Climbable" to="." method="_on_climbable_body_exited"]
+[connection signal="body_entered" from="HeadDetectionBox" to="." method="_on_head_detection_box_body_entered"]
+[connection signal="body_entered" from="HeadDetectionBox" to="." method="_on_detection_box_body_entered"]
+[connection signal="body_exited" from="HeadDetectionBox" to="." method="_on_detection_box_body_exited"]
+[connection signal="body_exited" from="HeadDetectionBox" to="." method="_on_head_detection_box_body_exited"]
 [connection signal="body_entered" from="TrollFrontArea" to="." method="_on_troll_front_area_body_entered"]
 [connection signal="body_exited" from="TrollFrontArea" to="." method="_on_troll_front_area_body_exited"]
 [connection signal="body_entered" from="TrollBackArea" to="." method="_on_troll_back_area_body_entered"]

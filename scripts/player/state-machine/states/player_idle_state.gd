@@ -11,3 +11,11 @@ func enter(args: Array) -> void:
 	
 	if !skip_state:
 		player.animation_player.queue("idle")
+
+func physics_update(delta) -> void:
+	super(delta)
+	if !active:
+		return
+
+	if player.mounted:
+		player.velocity = player.mount_velocity

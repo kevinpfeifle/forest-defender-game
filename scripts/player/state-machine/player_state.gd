@@ -52,7 +52,7 @@ func _check_for_state_change() -> StringName:
 	if player.is_on_floor() && Input.get_axis("player_left", "player_right") != 0:
 		return "move"
 	
-	if player.is_on_floor() && player.velocity == Vector2(0, 0):
+	if (player.is_on_floor() && player.velocity == Vector2.ZERO) || player.mounted:
 		return "idle"
 	
 	return ""

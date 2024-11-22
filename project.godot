@@ -99,4 +99,4 @@ player_down={
 2d_physics/layer_2="One-Way Platforms"
 2d_physics/layer_3="Player"
 2d_physics/layer_4="Troll"
-2d_physics/layer_5="TrollCollision"
+2d_physics/layer_5="TrollAreas"

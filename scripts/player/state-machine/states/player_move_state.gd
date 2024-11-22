@@ -29,4 +29,7 @@ func physics_update(delta) -> void:
 	else:
 		player.velocity.x = move_toward(player.velocity.x, 0, player.SPEED)
 
+	if player.mounted:
+		player.velocity += player.mount_velocity
+
 	player.set_facing_direction()

@@ -8,6 +8,7 @@ func enter(args) -> void:
 	super(args)
 	player.sprite.scale.y = player.sprite.scale.x
 	player.sprite.scale.x = 1
+	player.climbing.emit(player)
 	if args[0] == "idle" || args[0] == "move":
 		player.animation_player.play("climb_start_ground", -1, 2)
 		player.animation_player.queue("climb")
@@ -23,6 +24,7 @@ func exit(new_state: StringName) -> void:
 	# While rotated 90 degrees, the x and y were flipped. Set it back to normal.
 	player.sprite.scale.x = player.sprite.scale.y
 	player.sprite.scale.y = 1
+	player.stopped_climbing.emit(player)
 
 func physics_update(delta) -> void:
 	super(delta)
@@ -47,12 +49,15 @@ func physics_update(delta) -> void:
 	else:
 		player.velocity.y = move_toward(player.velocity.y, 0, player.SPEED)
 
+	if player.mounted:
+		player.velocity += player.mount_velocity
+
 	if player.is_on_floor() && player.velocity.y > 0:
-		player.velocity = Vector2(0, 0)
+		player.velocity = Vector2.ZERO 
 		transition.emit("idle", [state_name])
 		return
 
-	if player.velocity == Vector2(0, 0):
+	if player.velocity == Vector2.ZERO :
 		player.animation_player.pause()
 	else:
 		player.animation_player.play("climb")
