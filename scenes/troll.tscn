@@ -1,9 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://yw8y76a3v30a"]
+[gd_scene load_steps=18 format=3 uid="uid://yw8y76a3v30a"]
 
 [ext_resource type="Script" path="res://scripts/enemies/troll/troll.gd" id="1_0s5wj"]
-[ext_resource type="Texture2D" uid="uid://ckl2tnjkem5oo" path="res://assets/sprites/troll/troll-idle.png" id="1_jmey4"]
+[ext_resource type="Texture2D" uid="uid://cqpj4synayw6u" path="res://assets/sprites/troll/troll_sprite_sheet.png" id="2_36o3i"]
 [ext_resource type="Script" path="res://scripts/climable.gd" id="3_ha1hf"]
 [ext_resource type="Texture2D" uid="uid://dgb8lb6vefx56" path="res://assets/sprites/troll/troll-idle - Copy.png" id="3_sxm8h"]
+[ext_resource type="Script" path="res://scripts/enemies/troll/state-machine/troll_state_machine.gd" id="5_i5o88"]
+[ext_resource type="Script" path="res://scripts/enemies/troll/state-machine/states/troll_idle_state.gd" id="6_2v3q5"]
 
 [sub_resource type="Animation" id="Animation_mw0ie"]
 length = 0.001
@@ -15,9 +17,9 @@ tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1e+06),
 "update": 0,
-"values": [Vector2(3.8147e-06, -420)]
+"values": [Vector2(0, -346)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -42,6 +44,86 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("..:process_mode")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_c6j1o"]
+resource_name = "death"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [36, 37, 38, 39, 40, 41]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1e+06),
+"update": 0,
+"values": [Vector2(0, -422)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("..:process_mode")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1e+06),
+"update": 1,
+"values": [4]
+}
+
+[sub_resource type="Animation" id="Animation_5x03b"]
+resource_name = "hurt"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [30, 31, 32]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1e+06),
+"update": 0,
+"values": [Vector2(0, -408)]
 }
 
 [sub_resource type="Animation" id="Animation_34i43"]
@@ -68,9 +150,9 @@ tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1e+06),
 "update": 0,
-"values": [Vector2(3.8147e-06, -420)]
+"values": [Vector2(0, -346)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -85,14 +167,99 @@ tracks/2/keys = {
 "values": [0, 1, 2, 3]
 }
 
+[sub_resource type="Animation" id="Animation_kcci4"]
+resource_name = "move"
+length = 1.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [6, 7, 8, 9, 10, 11]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1e+06),
+"update": 0,
+"values": [Vector2(0, -346)]
+}
+
+[sub_resource type="Animation" id="Animation_a4jue"]
+resource_name = "stomp"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.8, 0.825),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [24, 25, 26, 27, 28]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1e+06),
+"update": 0,
+"values": [Vector2(0, -395)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("..")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.833333),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"stomp"
+}]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_kygt5"]
 _data = {
 "RESET": SubResource("Animation_mw0ie"),
-"idle": SubResource("Animation_34i43")
+"death": SubResource("Animation_c6j1o"),
+"hurt": SubResource("Animation_5x03b"),
+"idle": SubResource("Animation_34i43"),
+"move": SubResource("Animation_kcci4"),
+"stomp": SubResource("Animation_a4jue")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_erqh7"]
 size = Vector2(285, 11.25)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_61qq4"]
+friction = 0.0
+bounce = 1.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ajhxs"]
+size = Vector2(310, 530)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w35hg"]
+size = Vector2(225, 530)
 
 [node name="Troll" type="CharacterBody2D" node_paths=PackedStringArray("animation_player", "sprite")]
 z_index = 2
@@ -106,14 +273,15 @@ sprite = NodePath("Sprite")
 [node name="Sprite" type="Sprite2D" parent="."]
 z_index = 2
 z_as_relative = false
-position = Vector2(3.8147e-06, -420)
-texture = ExtResource("1_jmey4")
-hframes = 4
+position = Vector2(0, -346)
+texture = ExtResource("2_36o3i")
+hframes = 6
+vframes = 7
 
 [node name="BackLegSprite" type="Sprite2D" parent="."]
+visible = false
 z_as_relative = false
 position = Vector2(0, -420)
-scale = Vector2(1, 1)
 texture = ExtResource("3_sxm8h")
 hframes = 4
 
@@ -136,11 +304,53 @@ script = ExtResource("3_ha1hf")
 polygon = PackedVector2Array(25, -200, 35, -375, 35, -655, 210, -650, 250, -590, 250, -455, 250, -335, 190, -200)
 
 [node name="Standable" type="StaticBody2D" parent="."]
+visible = false
 collision_layer = 2
 collision_mask = 4
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Standable"]
+[node name="CollisionArea" type="CollisionShape2D" parent="Standable"]
 position = Vector2(-37.5, -735.625)
 scale = Vector2(0.999999, 0.999999)
 shape = SubResource("RectangleShape2D_erqh7")
 one_way_collision = true
+
+[node name="CollisionBox" type="StaticBody2D" parent="."]
+visible = false
+collision_layer = 16
+collision_mask = 4
+physics_material_override = SubResource("PhysicsMaterial_61qq4")
+
+[node name="CollisionArea" type="CollisionPolygon2D" parent="CollisionBox"]
+polygon = PackedVector2Array(30, -200, -210, -200, -180, -375, -130, -505, -65, -615, 30, -730)
+
+[node name="TrollFrontArea" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 4
+
+[node name="SortArea" type="CollisionShape2D" parent="TrollFrontArea"]
+position = Vector2(-130, -465)
+scale = Vector2(0.999999, 0.999999)
+shape = SubResource("RectangleShape2D_ajhxs")
+
+[node name="TrollBackArea" type="Area2D" parent="."]
+scale = Vector2(1, 1)
+collision_layer = 16
+collision_mask = 4
+
+[node name="SortArea" type="CollisionShape2D" parent="TrollBackArea"]
+position = Vector2(137.5, -465)
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_w35hg")
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("troll", "current_state")]
+script = ExtResource("5_i5o88")
+troll = NodePath("..")
+current_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("6_2v3q5")
+
+[connection signal="body_entered" from="TrollFrontArea" to="." method="_on_troll_front_area_body_entered"]
+[connection signal="body_exited" from="TrollFrontArea" to="." method="_on_troll_front_area_body_exited"]
+[connection signal="body_entered" from="TrollBackArea" to="." method="_on_troll_back_area_body_entered"]
+[connection signal="body_exited" from="TrollBackArea" to="." method="_on_troll_back_area_body_exited"]
