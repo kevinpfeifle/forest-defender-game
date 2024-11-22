@@ -6,15 +6,27 @@ func _ready() -> void:
 
 func enter(args) -> void:
 	super(args)
+
+	# TODO: Reenable the ease-in animations for climbing if the sprites ever get fixed. See below.
+	# if args[0] == "idle" || args[0] == "move":
+	# 	player.animation_player.play("climb_start_ground", -1, 2)
+	# 	player.animation_player.queue("climb")
+	# elif args[0] == "jump" || args[0] == "fall":
+	# 	player.animation_player.play("climb_start_fall", -1 , 2)
+	player.animation_player.play("climb")
+
+	## NOTE: This bit of position logic should only be utilized in the climbing animations.
+	## It is made necessary by the uneven placement of the squirrel in its running animations.
+	## The sprite has to physically move when it is flipped since its mirror axis is not in the middle.
+	## So, we take that offset and multiply it by the facing direction so we move it left or right by x.
+	## If ever those animations are fixed, or a proper climb animation is made, this can be removed.
+	# The 85 and -82 are constant offsets. Since this is bad code I' m not making them real constants.
+	player.sprite.position = Vector2(85 * player.sprite.scale.x, -82)
+
+	# While rotated 90 degrees, the x and y need to be flipped.
 	player.sprite.scale.y = player.sprite.scale.x
 	player.sprite.scale.x = 1
 	player.climbing.emit(player)
-	if args[0] == "idle" || args[0] == "move":
-		player.animation_player.play("climb_start_ground", -1, 2)
-		player.animation_player.queue("climb")
-	elif args[0] == "jump" || args[0] == "fall":
-		player.animation_player.play("climb_start_fall", -1 , 2)
-		player.animation_player.queue("climb")
 
 func exit(new_state: StringName) -> void:
 	if new_state == "idle":
@@ -57,7 +69,7 @@ func physics_update(delta) -> void:
 		transition.emit("idle", [state_name])
 		return
 
-	if player.velocity == Vector2.ZERO :
+	if player.velocity == Vector2.ZERO || (player.mounted && player.velocity == player.mount_velocity):
 		player.animation_player.pause()
-	else:
+	elif !player.animation_player.is_playing():
 		player.animation_player.play("climb")
