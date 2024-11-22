@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://ctqncls60qk8f" path="res://assets/tilesets/forest/tiles.png" id="1_niupq"]
 [ext_resource type="Texture2D" uid="uid://bhd4d4wl1ov68" path="res://assets/tilesets/tall-trees/tall-trees.png" id="2_qia23"]
 [ext_resource type="PackedScene" uid="uid://bhy7r7rwch1pr" path="res://scenes/player_controller.tscn" id="3_aixh4"]
-[ext_resource type="PackedScene" uid="uid://yw8y76a3v30a" path="res://scenes/troll.tscn" id="4_pvvol"]
+[ext_resource type="PackedScene" uid="uid://c83csgpacfpkb" path="res://scenes/troll_spawner.tscn" id="6_cs361"]
 [ext_resource type="Script" path="res://scripts/climable.gd" id="6_fntha"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_iq46l"]
@@ -567,9 +567,6 @@ tile_set = SubResource("TileSet_pmnwf")
 [node name="PlayerController" parent="." instance=ExtResource("3_aixh4")]
 position = Vector2(0, 1)
 
-[node name="Troll" parent="." instance=ExtResource("4_pvvol")]
-position = Vector2(-149, 0)
-
 [node name="Climbable1" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 4
@@ -586,5 +583,8 @@ collision_mask = 4
 script = ExtResource("6_fntha")
 
 [node name="ClimbArea" type="CollisionShape2D" parent="Climbable2"]
-position = Vector2(47.5, 191.5)
+position = Vector2(48, 189)
 shape = SubResource("RectangleShape2D_euwnw")
+
+[node name="TrollSpawner" parent="." instance=ExtResource("6_cs361")]
+position = Vector2(-143, -1)
