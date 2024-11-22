@@ -2,6 +2,7 @@ class_name PlayerFallState
 extends PlayerState
 
 var air_time: float = 0.0
+var coyote_connected: bool = false
 var grace_jump: bool = false
 
 func _ready() -> void:
@@ -15,6 +16,7 @@ func enter(args: Array) -> void:
 	if args[0] != "jump":
 		player.coyote_timer.timeout.connect(_on_coyote_timer_timeout)
 		player.coyote_timer.start()
+		coyote_connected = true
 		grace_jump = true
 	else:
 		player.animation_player.play("fall_start_jump")
@@ -26,8 +28,10 @@ func exit(_new_state: StringName) -> void:
 	player.animation_player.stop()
 	
 	# Teardown the coyote timer.
-	player.coyote_timer.stop()
-	player.coyote_timer.timeout.disconnect(_on_coyote_timer_timeout)
+	if coyote_connected:
+		player.coyote_timer.stop()
+		player.coyote_timer.timeout.disconnect(_on_coyote_timer_timeout)
+		coyote_connected = false
 	grace_jump = false
 
 ## Fall state overrides the default state change logic due to coyote time interactions with jumping.

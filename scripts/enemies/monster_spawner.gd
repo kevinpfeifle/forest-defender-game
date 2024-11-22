@@ -10,7 +10,7 @@ extends Node2D
 @onready var level = get_parent()
 
 func _ready() -> void:
-	var monster: Monster = spawn_monster()
+	var _monster: Monster = spawn_monster()
 
 func spawn_monster() -> Monster:
 	var monster: Monster = monster_scene.instantiate()
