@@ -3,8 +3,8 @@
 [ext_resource type="Script" path="res://scripts/level.gd" id="1_0kg3g"]
 [ext_resource type="Texture2D" uid="uid://ctqncls60qk8f" path="res://assets/tilesets/forest/tiles.png" id="1_niupq"]
 [ext_resource type="Texture2D" uid="uid://bhd4d4wl1ov68" path="res://assets/tilesets/tall-trees/tall-trees.png" id="2_qia23"]
-[ext_resource type="PackedScene" uid="uid://bhy7r7rwch1pr" path="res://scenes/player_controller.tscn" id="3_aixh4"]
-[ext_resource type="PackedScene" uid="uid://c83csgpacfpkb" path="res://scenes/troll_spawner.tscn" id="6_cs361"]
+[ext_resource type="PackedScene" uid="uid://bhy7r7rwch1pr" path="res://scenes/player/player_controller.tscn" id="3_aixh4"]
+[ext_resource type="PackedScene" uid="uid://mvhq0bnihqre" path="res://scenes/enemies/troll_spawner.tscn" id="6_cs361"]
 [ext_resource type="Script" path="res://scripts/climable.gd" id="6_fntha"]
 [ext_resource type="Script" path="res://scripts/mystic_tree.gd" id="7_k52us"]
 

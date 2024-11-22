@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://yw8y76a3v30a"]
+[gd_scene load_steps=21 format=3 uid="uid://degun8crxj2g2"]
 
 [ext_resource type="Script" path="res://scripts/enemies/troll/troll.gd" id="1_0s5wj"]
 [ext_resource type="Texture2D" uid="uid://dgq4u0bjah6by" path="res://assets/sprites/troll/troll_sprite_sheet.png" id="2_pj1t1"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://scripts/enemies/troll/state-machine/troll_state_machine.gd" id="5_i5o88"]
 [ext_resource type="Script" path="res://scripts/enemies/troll/state-machine/states/troll_idle_state.gd" id="6_2v3q5"]
 [ext_resource type="Script" path="res://scripts/enemies/troll/state-machine/states/troll_march_state.gd" id="6_ww1ko"]
+[ext_resource type="PackedScene" uid="uid://b5enwnsqkkn82" path="res://scenes/components/health_component.tscn" id="7_0nm5h"]
 
 [sub_resource type="Animation" id="Animation_mw0ie"]
 length = 0.001
@@ -368,6 +369,9 @@ script = ExtResource("6_ww1ko")
 
 [node name="Move" type="Node" parent="StateMachine"]
 
+[node name="HealthComponent" parent="." instance=ExtResource("7_0nm5h")]
+max_health = 10.0
+
 [node name="DebugLabel" type="Label" parent="."]
 offset_left = 420.0
 offset_top = -570.0
@@ -378,8 +382,8 @@ text = "Velocity: 0,0"
 
 [connection signal="body_entered" from="Climbable" to="." method="_on_climbable_body_entered"]
 [connection signal="body_exited" from="Climbable" to="." method="_on_climbable_body_exited"]
-[connection signal="body_entered" from="HeadDetectionBox" to="." method="_on_head_detection_box_body_entered"]
 [connection signal="body_entered" from="HeadDetectionBox" to="." method="_on_detection_box_body_entered"]
+[connection signal="body_entered" from="HeadDetectionBox" to="." method="_on_head_detection_box_body_entered"]
 [connection signal="body_exited" from="HeadDetectionBox" to="." method="_on_detection_box_body_exited"]
 [connection signal="body_exited" from="HeadDetectionBox" to="." method="_on_head_detection_box_body_exited"]
 [connection signal="body_entered" from="TrollFrontArea" to="." method="_on_troll_front_area_body_entered"]
