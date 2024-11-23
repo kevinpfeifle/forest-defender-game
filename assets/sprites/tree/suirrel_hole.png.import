@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://pthsojsngvo3"
-path="res://.godot/imported/walk.png-4b65ed411cc73d51cb85a5a8e4963f79.ctex"
+uid="uid://c5vsw38hatqcd"
+path="res://.godot/imported/suirrel_hole.png-5efbb9c5c30c646cd0ff4fe6735b98b1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/imp-temp/walk.png"
-dest_files=["res://.godot/imported/walk.png-4b65ed411cc73d51cb85a5a8e4963f79.ctex"]
+source_file="res://assets/sprites/tree/suirrel_hole.png"
+dest_files=["res://.godot/imported/suirrel_hole.png-5efbb9c5c30c646cd0ff4fe6735b98b1.ctex"]
 
 [params]
 

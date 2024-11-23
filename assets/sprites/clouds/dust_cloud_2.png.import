@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d2qs1doiusp7y"
-path="res://.godot/imported/fireball-explode.png-9ee941be4a6e9a2532f78be67f62b87c.ctex"
+uid="uid://1vvrw22rs1b3"
+path="res://.godot/imported/dust_cloud_2.png-4a0541b5c75f667cc1410830b6b7cc67.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/fireball/fireball-explode.png"
-dest_files=["res://.godot/imported/fireball-explode.png-9ee941be4a6e9a2532f78be67f62b87c.ctex"]
+source_file="res://assets/sprites/clouds/dust_cloud_2.png"
+dest_files=["res://.godot/imported/dust_cloud_2.png-4a0541b5c75f667cc1410830b6b7cc67.ctex"]
 
 [params]
 

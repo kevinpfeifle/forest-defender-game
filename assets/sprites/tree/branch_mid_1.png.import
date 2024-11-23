@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d0tminkuavd76"
-path="res://.godot/imported/hurt.png-56df88759ad41801b507ed9f4609e63a.ctex"
+uid="uid://cttiv8wd8tmxo"
+path="res://.godot/imported/branch_mid_1.png-82a3615a334dc5688ad4412384da9df1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/imp-temp/hurt.png"
-dest_files=["res://.godot/imported/hurt.png-56df88759ad41801b507ed9f4609e63a.ctex"]
+source_file="res://assets/sprites/tree/branch_mid_1.png"
+dest_files=["res://.godot/imported/branch_mid_1.png-82a3615a334dc5688ad4412384da9df1.ctex"]
 
 [params]
 

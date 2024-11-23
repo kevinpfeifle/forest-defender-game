@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bk3nsrfd14456"
-path="res://.godot/imported/vulture-idle.png-d645dd888e4f09f84e1efbe03696684e.ctex"
+uid="uid://dxp3gcwt5p7wm"
+path="res://.godot/imported/fireball.png-14b1690029dedffe3ef04d5679f00d9c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/vulture-temp/vulture-idle.png"
-dest_files=["res://.godot/imported/vulture-idle.png-d645dd888e4f09f84e1efbe03696684e.ctex"]
+source_file="res://assets/sprites/free-temp/fireball/fireball.png"
+dest_files=["res://.godot/imported/fireball.png-14b1690029dedffe3ef04d5679f00d9c.ctex"]
 
 [params]
 

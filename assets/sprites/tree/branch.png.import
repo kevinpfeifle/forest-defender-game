@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://j88q5t5fc0cu"
-path="res://.godot/imported/climb.png-e51e044ce78d5e987ff7f15c77e6228e.ctex"
+uid="uid://2xpv2h12rso7"
+path="res://.godot/imported/branch.png-c052ca6396adea0116735ab668ecfad1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/imp-temp/climb.png"
-dest_files=["res://.godot/imported/climb.png-e51e044ce78d5e987ff7f15c77e6228e.ctex"]
+source_file="res://assets/sprites/tree/branch.png"
+dest_files=["res://.godot/imported/branch.png-c052ca6396adea0116735ab668ecfad1.ctex"]
 
 [params]
 

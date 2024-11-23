@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://drlh6360kj2t"
-path="res://.godot/imported/vulture.png-451a6dcc330bf986aafafff02556f173.ctex"
+uid="uid://b01xcre5yemnt"
+path="res://.godot/imported/shot.png-a8e425bb781f56ded575a4bfebc0e316.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/vulture-temp/vulture.png"
-dest_files=["res://.godot/imported/vulture.png-451a6dcc330bf986aafafff02556f173.ctex"]
+source_file="res://assets/sprites/free-temp/imp-temp/shot.png"
+dest_files=["res://.godot/imported/shot.png-a8e425bb781f56ded575a4bfebc0e316.ctex"]
 
 [params]
 
