@@ -3,11 +3,19 @@ extends Monster
 
 @export var debug_label: Label 
 
+@onready var center_of_mass: Marker2D = $CenterOfMass
+
 const SPEED = 50
 
 var has_rider: bool = false
+var dynamic_children: Array[Node] # All the child nodes that need to flip when the sprite flips.
 var rider: CharacterBody2D
 var target_arrived: bool = false
+
+func _ready() -> void:
+	for child in get_children():
+		if child is Sprite2D || child is Area2D || child is StaticBody2D:
+			dynamic_children.append(child)
 
 func _process(_delta) -> void:
 	debug_label.text = "Velocity: %s" % [velocity]
@@ -17,10 +25,14 @@ func _physics_process(_delta: float) -> void:
 
 ## Troll specific logic.
 func set_facing_direction() -> void:
+	var facing_direction: int
 	if velocity.x > 0:
-		sprite.scale.x = -1
+		facing_direction = -1
 	elif velocity.x < 0:
-		sprite.scale.x = 1
+		facing_direction = 1
+
+	for child in dynamic_children:
+		child.scale.x = facing_direction
 
 ## The stomp attack from the troll gets called automatically at the end of the stomp animation?
 func stomp() -> void:

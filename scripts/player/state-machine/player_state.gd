@@ -19,6 +19,10 @@ var buffer_map: Dictionary = {
 func enter(_args) -> void:
 	skip_state = false
 
+	# Connect to the hurt/death signals from the health component
+	player.health_component.damaged.connect(_on_player_damaged)
+	player.health_component.dead.connect(_on_player_death)
+
 	# Check if there is a buffered input we should transition to instead of this state.
 	if player.buffered_input != "" && buffer_map[player.buffered_input].has(state_name):
 		var new_state = player.buffered_input
@@ -26,6 +30,10 @@ func enter(_args) -> void:
 		player.buffered_input = ""
 		skip_state = true
 		transition.emit(new_state, [state_name])
+
+func exit(_new_state: StringName) -> void:
+	player.health_component.damaged.disconnect(_on_player_damaged)
+	player.health_component.dead.disconnect(_on_player_death)
 
 ## Default abstract logic simply handles state changes.
 func physics_update(_delta: float) -> void:
@@ -56,3 +64,11 @@ func _check_for_state_change() -> StringName:
 		return "idle"
 	
 	return ""
+
+func _on_player_damaged(amount, source, power, direction_x, direction_y) -> void:
+	active = false
+	transition.emit("hurt", [state_name, amount, source, power, direction_x, direction_y])
+
+func _on_player_death() -> void:
+	active = false
+	transition.emit("death", [state_name])

@@ -6,12 +6,12 @@ extends Camera2D
 @export_range(100, 1000) var camera_speed: int = 400
 
 @export var player: Player
-var player_last_pos: Vector2
 
 var camera_position: Vector2
 var mouse_position: Vector2
 var camera_lock: bool = true
 var dragging: bool = false
+var player_last_pos: Vector2
 
 func _ready() -> void:
 	player_last_pos = player.position
@@ -19,7 +19,7 @@ func _ready() -> void:
 func _process(delta) -> void:
 	# Pan back to player if camera lock is on and player is moving.
 	if camera_lock and (player_last_pos != player.position):
-		position = player.position
+		position = Vector2(player.position.x, player.position.y)
 		player_last_pos = player.position
 
 	# Allows camera panning from the keyboard. Needs to be in _process so holding the buttons works.
@@ -42,18 +42,20 @@ func _input(event) -> void:
 		else:
 			dragging = false
 	elif event is InputEventMouseMotion and dragging:
-		position = ((mouse_position - event.position) / zoom) + camera_position
+		var new_position: Vector2 = ((mouse_position - event.position) / zoom) + camera_position
+		if !(new_position.y > player.position.y):
+			position = new_position
 	elif event.is_action_pressed("camera_zoom_in"):
 		var new_zoom: Vector2 = zoom + Vector2(zoom_speed, zoom_speed)
-		new_zoom.x = clamp(new_zoom.x, 0.1, max_zoom)
-		new_zoom.y = clamp(new_zoom.y, 0.1, max_zoom)
+		new_zoom.x = clamp(new_zoom.x, 1, max_zoom)
+		new_zoom.y = clamp(new_zoom.y, 1, max_zoom)
 		zoom = new_zoom
 	elif event.is_action_pressed("camera_zoom_out"):
 		var new_zoom: Vector2 = zoom - Vector2(zoom_speed, zoom_speed)
-		new_zoom.x = clamp(new_zoom.x, 0.1, max_zoom)
-		new_zoom.y = clamp(new_zoom.y, 0.1, max_zoom)
+		new_zoom.x = clamp(new_zoom.x, 1, max_zoom)
+		new_zoom.y = clamp(new_zoom.y, 1, max_zoom)
 		zoom = new_zoom
 	elif event.is_action_pressed("camera_center"):
-		position = player.position
+		position = Vector2(player.position.x, player.position.y)
 	elif event.is_action_pressed("camera_lock"):
 		camera_lock = !camera_lock

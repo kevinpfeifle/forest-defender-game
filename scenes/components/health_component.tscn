@@ -2,5 +2,10 @@
 
 [ext_resource type="Script" path="res://scripts/components/health_component.gd" id="1_ypkrr"]
 
-[node name="HealthComponent" type="Node"]
+[node name="HealthComponent" type="Node" node_paths=PackedStringArray("i_frame_timer")]
 script = ExtResource("1_ypkrr")
+i_frame_timer = NodePath("IFrameTimer")
+
+[node name="IFrameTimer" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true

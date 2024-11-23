@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://tb3t0ldrwiju"]
+[gd_scene load_steps=30 format=3 uid="uid://tb3t0ldrwiju"]
 
 [ext_resource type="Script" path="res://scripts/player/player.gd" id="1_vmj8w"]
 [ext_resource type="Texture2D" uid="uid://cke6m4hjh2c8w" path="res://assets/sprites/squirrel/squirrel_sprite_sheet.png" id="2_4w42g"]
@@ -9,6 +9,8 @@
 [ext_resource type="Script" path="res://scripts/player/state-machine/states/player_fall_state.gd" id="7_mrhic"]
 [ext_resource type="Script" path="res://scripts/player/state-machine/states/player_climb_state.gd" id="8_wpt1g"]
 [ext_resource type="PackedScene" uid="uid://b5enwnsqkkn82" path="res://scenes/components/health_component.tscn" id="9_6unfo"]
+[ext_resource type="Script" path="res://scripts/player/state-machine/states/player_hurt_state.gd" id="9_nmelt"]
+[ext_resource type="Script" path="res://scripts/player/state-machine/states/player_death_state.gd" id="10_6ylk4"]
 
 [sub_resource type="Animation" id="Animation_l1ng7"]
 length = 0.001
@@ -762,16 +764,17 @@ _data = {
 radius = 55.0
 height = 175.0
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("animation_player", "coyote_timer", "debug_label", "input_buffer_timer", "sprite", "state_machine")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("animation_player", "coyote_timer", "debug_label", "health_component", "hurt_timer", "input_buffer_timer", "sprite", "state_machine")]
 z_index = 1
 z_as_relative = false
-scale = Vector2(0.2, 0.2)
 collision_layer = 4
 collision_mask = 19
 script = ExtResource("1_vmj8w")
 animation_player = NodePath("AnimationPlayer")
 coyote_timer = NodePath("CoyoteTimer")
 debug_label = NodePath("DebugLabel")
+health_component = NodePath("HealthComponent")
+hurt_timer = NodePath("HurtTimer")
 input_buffer_timer = NodePath("InputBufferTimer")
 sprite = NodePath("Sprite")
 state_machine = NodePath("StateMachine")
@@ -812,6 +815,10 @@ one_shot = true
 wait_time = 0.2
 one_shot = true
 
+[node name="HurtTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("player", "current_state")]
 script = ExtResource("3_0kubi")
 player = NodePath("..")
@@ -832,9 +839,17 @@ script = ExtResource("7_mrhic")
 [node name="Climb" type="Node" parent="StateMachine"]
 script = ExtResource("8_wpt1g")
 
+[node name="Hurt" type="Node" parent="StateMachine"]
+script = ExtResource("9_nmelt")
+
+[node name="Death" type="Node" parent="StateMachine"]
+script = ExtResource("10_6ylk4")
+
 [node name="HealthComponent" parent="." instance=ExtResource("9_6unfo")]
-max_health = 3.0
+max_health = 100.0
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="timeout" from="InputBufferTimer" to="." method="_on_input_buffer_timer_timeout"]
 [connection signal="timeout" from="CoyoteTimer" to="." method="_on_coyote_timer_timeout"]
+
+[editable path="HealthComponent"]

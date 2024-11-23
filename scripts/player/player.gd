@@ -4,6 +4,8 @@ extends CharacterBody2D
 @export var animation_player: AnimationPlayer
 @export var coyote_timer: Timer
 @export var debug_label: Label
+@export var health_component: HealthComponent
+@export var hurt_timer: Timer
 @export var input_buffer_timer: Timer
 @export var sprite: Sprite2D
 @export var state_machine: StateMachine

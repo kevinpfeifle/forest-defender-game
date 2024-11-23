@@ -591,5 +591,5 @@ position = Vector2(-143, -1)
 final_target = NodePath("../MysticTree")
 
 [node name="MysticTree" type="Node2D" parent="."]
-position = Vector2(-775, -1)
+position = Vector2(353, 1)
 script = ExtResource("7_k52us")

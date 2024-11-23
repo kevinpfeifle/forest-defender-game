@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://degun8crxj2g2"]
+[gd_scene load_steps=22 format=3 uid="uid://degun8crxj2g2"]
 
 [ext_resource type="Script" path="res://scripts/enemies/troll/troll.gd" id="1_0s5wj"]
 [ext_resource type="Texture2D" uid="uid://dgq4u0bjah6by" path="res://assets/sprites/troll/troll_sprite_sheet.png" id="2_pj1t1"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://scripts/enemies/troll/state-machine/states/troll_idle_state.gd" id="6_2v3q5"]
 [ext_resource type="Script" path="res://scripts/enemies/troll/state-machine/states/troll_march_state.gd" id="6_ww1ko"]
 [ext_resource type="PackedScene" uid="uid://b5enwnsqkkn82" path="res://scenes/components/health_component.tscn" id="7_0nm5h"]
+[ext_resource type="Script" path="res://scripts/enemies/troll/state-machine/states/troll_attack_state.gd" id="7_ey4l4"]
 
 [sub_resource type="Animation" id="Animation_mw0ie"]
 length = 0.001
@@ -74,6 +75,20 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(0, -468)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../StateMachine/Attack")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"attack"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_c6j1o"]
@@ -254,15 +269,15 @@ _data = {
 "stomp": SubResource("Animation_a4jue")
 }
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_61qq4"]
+friction = 0.0
+bounce = 1.0
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_erqh7"]
 size = Vector2(285, 11.25)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_n0pv7"]
 size = Vector2(285, 85)
-
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_61qq4"]
-friction = 0.0
-bounce = 1.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ajhxs"]
 size = Vector2(310, 530)
@@ -300,6 +315,26 @@ visible = false
 position = Vector2(100, 0)
 polygon = PackedVector2Array(0, 0, -350, 0, -350, -65, -310, -75, -265, -90, -260, -180, -260, -375, -270, -500, -300, -550, -300, -620, -290, -700, -280, -770, -265, -815, -135, -840, 30, -840, 190, -815, 225, -720, 250, -605, 260, -500, 240, -385, 230, -280, 190, -180, 160, -90, 125, 0)
 
+[node name="CenterOfMass" type="Marker2D" parent="."]
+position = Vector2(0, -440)
+
+[node name="FrontAttackBox" type="Area2D" parent="."]
+scale = Vector2(5, 5)
+collision_layer = 16
+collision_mask = 4
+
+[node name="HitArea" type="CollisionPolygon2D" parent="FrontAttackBox"]
+polygon = PackedVector2Array(-38, -40, -38, -146, 51, -146, 51, -191, -89, -191, -89, -40)
+
+[node name="CollisionBox" type="StaticBody2D" parent="."]
+collision_layer = 16
+collision_mask = 4
+physics_material_override = SubResource("PhysicsMaterial_61qq4")
+
+[node name="CollisionArea" type="CollisionPolygon2D" parent="CollisionBox"]
+position = Vector2(95, 0)
+polygon = PackedVector2Array(30, -200, -210, -200, -180, -375, -130, -505, -65, -615, 30, -730)
+
 [node name="Climbable" type="Area2D" parent="."]
 collision_layer = 16
 collision_mask = 4
@@ -328,15 +363,6 @@ position = Vector2(50, -792.5)
 shape = SubResource("RectangleShape2D_n0pv7")
 debug_color = Color(0.613235, 0.537606, 0, 0.42)
 
-[node name="CollisionBox" type="StaticBody2D" parent="."]
-collision_layer = 16
-collision_mask = 4
-physics_material_override = SubResource("PhysicsMaterial_61qq4")
-
-[node name="CollisionArea" type="CollisionPolygon2D" parent="CollisionBox"]
-position = Vector2(95, 0)
-polygon = PackedVector2Array(30, -200, -210, -200, -180, -375, -130, -505, -65, -615, 30, -730)
-
 [node name="TrollFrontArea" type="Area2D" parent="."]
 collision_layer = 16
 collision_mask = 4
@@ -359,7 +385,7 @@ debug_color = Color(0.271103, 0.632637, 0, 0.42)
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("troll", "current_state")]
 script = ExtResource("5_i5o88")
 troll = NodePath("..")
-current_state = NodePath("Idle")
+current_state = NodePath("Attack")
 
 [node name="Idle" type="Node" parent="StateMachine"]
 script = ExtResource("6_2v3q5")
@@ -368,6 +394,10 @@ script = ExtResource("6_2v3q5")
 script = ExtResource("6_ww1ko")
 
 [node name="Move" type="Node" parent="StateMachine"]
+
+[node name="Attack" type="Node" parent="StateMachine" node_paths=PackedStringArray("attack_area")]
+script = ExtResource("7_ey4l4")
+attack_area = NodePath("../../FrontAttackBox")
 
 [node name="HealthComponent" parent="." instance=ExtResource("7_0nm5h")]
 max_health = 10.0
@@ -382,10 +412,10 @@ text = "Velocity: 0,0"
 
 [connection signal="body_entered" from="Climbable" to="." method="_on_climbable_body_entered"]
 [connection signal="body_exited" from="Climbable" to="." method="_on_climbable_body_exited"]
-[connection signal="body_entered" from="HeadDetectionBox" to="." method="_on_detection_box_body_entered"]
 [connection signal="body_entered" from="HeadDetectionBox" to="." method="_on_head_detection_box_body_entered"]
-[connection signal="body_exited" from="HeadDetectionBox" to="." method="_on_detection_box_body_exited"]
+[connection signal="body_entered" from="HeadDetectionBox" to="." method="_on_detection_box_body_entered"]
 [connection signal="body_exited" from="HeadDetectionBox" to="." method="_on_head_detection_box_body_exited"]
+[connection signal="body_exited" from="HeadDetectionBox" to="." method="_on_detection_box_body_exited"]
 [connection signal="body_entered" from="TrollFrontArea" to="." method="_on_troll_front_area_body_entered"]
 [connection signal="body_exited" from="TrollFrontArea" to="." method="_on_troll_front_area_body_exited"]
 [connection signal="body_entered" from="TrollBackArea" to="." method="_on_troll_back_area_body_entered"]

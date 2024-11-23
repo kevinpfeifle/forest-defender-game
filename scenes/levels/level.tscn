@@ -1,0 +1,83 @@
+[gd_scene load_steps=11 format=4 uid="uid://b8djgex12f7v6"]
+
+[ext_resource type="Script" path="res://scripts/level_parallax_background.gd" id="1_pfl45"]
+[ext_resource type="Texture2D" uid="uid://bddv7315fcghq" path="res://assets/backgrounds/fey-forest/layer1.png" id="1_twv7y"]
+[ext_resource type="Texture2D" uid="uid://bs7524ksni1l3" path="res://assets/backgrounds/fey-forest/layer2.png" id="2_0co0g"]
+[ext_resource type="Texture2D" uid="uid://duerwmfxk66ry" path="res://assets/backgrounds/fey-forest/layer3.png" id="3_af6wj"]
+[ext_resource type="Texture2D" uid="uid://bb7lnoftheg2" path="res://assets/backgrounds/fey-forest/layer4.png" id="4_f2yox"]
+[ext_resource type="Texture2D" uid="uid://cdw32loubhiqn" path="res://assets/backgrounds/fey-forest/layer5.png" id="5_pghj5"]
+[ext_resource type="PackedScene" uid="uid://bhy7r7rwch1pr" path="res://scenes/player/player_controller.tscn" id="6_pr5am"]
+[ext_resource type="PackedScene" uid="uid://b4oslv6ohqmkv" path="res://scenes/forest_floor.tscn" id="7_dx8oi"]
+
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_ac0xy"]
+scenes/1/scene = ExtResource("7_dx8oi")
+
+[sub_resource type="TileSet" id="TileSet_7tf03"]
+tile_size = Vector2i(1920, 350)
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetScenesCollectionSource_ac0xy")
+
+[node name="Level" type="Node2D"]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="." node_paths=PackedStringArray("camera")]
+offset = Vector2(960, 540)
+transform = Transform2D(1, 0, 0, 1, 960, 540)
+scroll_ignore_camera_zoom = true
+script = ExtResource("1_pfl45")
+camera = NodePath("../PlayerController/Camera")
+
+[node name="ParallaxLayer1" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.1, 1)
+motion_mirroring = Vector2(1920, 0)
+
+[node name="Background" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer1"]
+scale = Vector2(0.384, 0.27)
+texture = ExtResource("1_twv7y")
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.25, 1)
+motion_mirroring = Vector2(1920, 0)
+
+[node name="DistantTrees" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
+scale = Vector2(0.384, 0.27)
+texture = ExtResource("2_0co0g")
+
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.5, 1)
+motion_mirroring = Vector2(1920, 0)
+
+[node name="CloseTrees" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer3"]
+scale = Vector2(0.384, 0.27)
+texture = ExtResource("3_af6wj")
+
+[node name="ParallaxLayer4" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2(0.75, 1)
+motion_mirroring = Vector2(1920, 0)
+
+[node name="FeyLights" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer4"]
+scale = Vector2(0.384, 0.27)
+texture = ExtResource("4_f2yox")
+
+[node name="ParallaxLayer5" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2(1920, 0)
+
+[node name="Bushes" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer5"]
+scale = Vector2(0.384, 0.27)
+texture = ExtResource("5_pghj5")
+
+[node name="Ground" type="TileMapLayer" parent="."]
+position = Vector2(0, 205)
+tile_map_data = PackedByteArray("AAAAAAIAAAAAAAAAAQABAAIAAAAAAAAAAQD//wIAAAAAAAAAAQACAAIAAAAAAAAAAQADAAIAAAAAAAAAAQAEAAIAAAAAAAAAAQD+/wIAAAAAAAAAAQD9/wIAAAAAAAAAAQA=")
+tile_set = SubResource("TileSet_7tf03")
+
+[node name="PlayerController" parent="." instance=ExtResource("6_pr5am")]
+position = Vector2(533, 346)
+
+[node name="Camera" parent="PlayerController" index="0"]
+position = Vector2(427, 497)
+
+[node name="Player" parent="PlayerController" index="1"]
+position = Vector2(444, 664)
+scale = Vector2(0.2, 0.2)
+
+[editable path="PlayerController"]

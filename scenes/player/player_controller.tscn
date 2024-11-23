@@ -10,10 +10,13 @@ camera = NodePath("Camera")
 player = NodePath("Player")
 
 [node name="Camera" type="Camera2D" parent="." node_paths=PackedStringArray("player")]
+zoom = Vector2(3, 3)
+limit_top = 0
+limit_bottom = 1080
 position_smoothing_enabled = true
 position_smoothing_speed = 6.0
 script = ExtResource("2_u4dli")
+max_zoom = 5
 player = NodePath("../Player")
 
 [node name="Player" parent="." instance=ExtResource("3_3pp5j")]
-position = Vector2(0, -4)
