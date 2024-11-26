@@ -1,6 +1,9 @@
 class_name TrollIdleState
 extends TrollState
 
+func _ready() -> void:
+	state_name = "idle"
+
 func enter(_args: Array) -> void:
 	troll.animation_player.play("idle")
 

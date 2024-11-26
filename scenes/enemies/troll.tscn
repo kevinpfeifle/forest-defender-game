@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://degun8crxj2g2"]
+[gd_scene load_steps=23 format=3 uid="uid://degun8crxj2g2"]
 
 [ext_resource type="Script" path="res://scripts/enemies/troll/troll.gd" id="1_0s5wj"]
 [ext_resource type="Texture2D" uid="uid://dgq4u0bjah6by" path="res://assets/sprites/troll/troll_sprite_sheet.png" id="2_pj1t1"]
@@ -285,6 +285,9 @@ size = Vector2(310, 530)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w35hg"]
 size = Vector2(225, 530)
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_hj7ye"]
+radius = 567.004
+
 [node name="Troll" type="CharacterBody2D" node_paths=PackedStringArray("debug_label", "animation_player", "sprite")]
 z_index = 2
 z_as_relative = false
@@ -382,6 +385,16 @@ position = Vector2(240, -465)
 shape = SubResource("RectangleShape2D_w35hg")
 debug_color = Color(0.271103, 0.632637, 0, 0.42)
 
+[node name="Vision" type="Area2D" parent="."]
+visible = false
+scale = Vector2(5, 5)
+collision_layer = 16
+collision_mask = 4
+
+[node name="DetectionRadius" type="CollisionShape2D" parent="Vision"]
+position = Vector2(0, -88)
+shape = SubResource("CircleShape2D_hj7ye")
+
 [node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("troll", "current_state")]
 script = ExtResource("5_i5o88")
 troll = NodePath("..")
@@ -414,9 +427,10 @@ text = "Velocity: 0,0"
 [connection signal="body_exited" from="Climbable" to="." method="_on_climbable_body_exited"]
 [connection signal="body_entered" from="HeadDetectionBox" to="." method="_on_head_detection_box_body_entered"]
 [connection signal="body_entered" from="HeadDetectionBox" to="." method="_on_detection_box_body_entered"]
-[connection signal="body_exited" from="HeadDetectionBox" to="." method="_on_head_detection_box_body_exited"]
 [connection signal="body_exited" from="HeadDetectionBox" to="." method="_on_detection_box_body_exited"]
+[connection signal="body_exited" from="HeadDetectionBox" to="." method="_on_head_detection_box_body_exited"]
 [connection signal="body_entered" from="TrollFrontArea" to="." method="_on_troll_front_area_body_entered"]
 [connection signal="body_exited" from="TrollFrontArea" to="." method="_on_troll_front_area_body_exited"]
 [connection signal="body_entered" from="TrollBackArea" to="." method="_on_troll_back_area_body_entered"]
 [connection signal="body_exited" from="TrollBackArea" to="." method="_on_troll_back_area_body_exited"]
+[connection signal="body_entered" from="Vision" to="." method="_on_vision_body_entered"]

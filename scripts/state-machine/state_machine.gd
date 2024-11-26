@@ -32,4 +32,4 @@ func on_child_transition(new_state: StringName, args: Array) -> void:
 		next_state.active = true
 		next_state.enter(args)
 	else:
-		push_warning("Called transition on a state that does not exist")
+		push_warning("Called transition on a state that does not exist", new_state)

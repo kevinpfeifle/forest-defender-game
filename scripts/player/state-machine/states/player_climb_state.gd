@@ -62,7 +62,7 @@ func physics_update(delta) -> void:
 		player.velocity.y = move_toward(player.velocity.y, 0, player.SPEED)
 
 	if player.mounted:
-		player.velocity += player.mount_velocity
+		player.velocity.x += player.mount_velocity.x
 
 	if player.is_on_floor() && player.velocity.y > 0:
 		player.velocity = Vector2.ZERO 

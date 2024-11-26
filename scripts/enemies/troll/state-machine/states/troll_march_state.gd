@@ -1,6 +1,9 @@
 class_name TrollMarchState
 extends TrollState
 
+func _ready() -> void:
+	state_name = "march"
+
 func enter(_args):
 	troll.animation_player.play("move")
 

@@ -3,6 +3,7 @@ extends PlayerState
 
 var air_time: float = 0.0
 var coyote_connected: bool = false
+var external_force: Vector2 = Vector2.ZERO
 var grace_jump: bool = false
 
 func _ready() -> void:
@@ -22,6 +23,10 @@ func enter(args: Array) -> void:
 		player.animation_player.play("fall_start_jump")
 		player.animation_player.queue("fall")
 		grace_jump = false
+
+	# Maintain horizontal momentum if this is knockback from an attack.
+	if args[0] == "hurt":
+		external_force = player.velocity
 
 func exit(_new_state: StringName) -> void:
 	air_time = 0.0
@@ -60,7 +65,11 @@ func physics_update(delta) -> void:
 	if direction:
 		player.velocity.x = direction * player.SPEED
 	else:
-		player.velocity.x = move_toward(player.velocity.x, 0, player.SPEED)
+		player.velocity.x = move_toward(player.velocity.x, 0, player.SPEED - external_force.x)
+		# TOOD: FIX THIS!
+		# if external_force != null:
+		# 	player.velocity.x += external_force.x
+
 
 	player.set_facing_direction()
 

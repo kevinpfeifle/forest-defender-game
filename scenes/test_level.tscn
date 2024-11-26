@@ -567,6 +567,9 @@ tile_set = SubResource("TileSet_pmnwf")
 [node name="PlayerController" parent="." instance=ExtResource("3_aixh4")]
 position = Vector2(0, 1)
 
+[node name="Player" parent="PlayerController" index="1"]
+scale = Vector2(0.2, 0.2)
+
 [node name="Climbable1" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 4
@@ -593,3 +596,5 @@ final_target = NodePath("../MysticTree")
 [node name="MysticTree" type="Node2D" parent="."]
 position = Vector2(353, 1)
 script = ExtResource("7_k52us")
+
+[editable path="PlayerController"]

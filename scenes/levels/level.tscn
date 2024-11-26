@@ -1,5 +1,6 @@
-[gd_scene load_steps=11 format=4 uid="uid://b8djgex12f7v6"]
+[gd_scene load_steps=15 format=4 uid="uid://b8djgex12f7v6"]
 
+[ext_resource type="Script" path="res://scripts/level.gd" id="1_1bsjw"]
 [ext_resource type="Script" path="res://scripts/level_parallax_background.gd" id="1_pfl45"]
 [ext_resource type="Texture2D" uid="uid://bddv7315fcghq" path="res://assets/backgrounds/fey-forest/layer1.png" id="1_twv7y"]
 [ext_resource type="Texture2D" uid="uid://bs7524ksni1l3" path="res://assets/backgrounds/fey-forest/layer2.png" id="2_0co0g"]
@@ -8,6 +9,9 @@
 [ext_resource type="Texture2D" uid="uid://cdw32loubhiqn" path="res://assets/backgrounds/fey-forest/layer5.png" id="5_pghj5"]
 [ext_resource type="PackedScene" uid="uid://bhy7r7rwch1pr" path="res://scenes/player/player_controller.tscn" id="6_pr5am"]
 [ext_resource type="PackedScene" uid="uid://b4oslv6ohqmkv" path="res://scenes/forest_floor.tscn" id="7_dx8oi"]
+[ext_resource type="PackedScene" uid="uid://mvhq0bnihqre" path="res://scenes/enemies/troll_spawner.tscn" id="9_ld6d1"]
+[ext_resource type="Script" path="res://scripts/mystic_tree.gd" id="10_45dnw"]
+[ext_resource type="Texture2D" uid="uid://cb20xlwfbn4h7" path="res://assets/sprites/tree/tree_base.png" id="12_8k4u6"]
 
 [sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_ac0xy"]
 scenes/1/scene = ExtResource("7_dx8oi")
@@ -18,6 +22,8 @@ physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetScenesCollectionSource_ac0xy")
 
 [node name="Level" type="Node2D"]
+z_as_relative = false
+script = ExtResource("1_1bsjw")
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="." node_paths=PackedStringArray("camera")]
 offset = Vector2(960, 540)
@@ -31,6 +37,7 @@ motion_scale = Vector2(0.1, 1)
 motion_mirroring = Vector2(1920, 0)
 
 [node name="Background" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer1"]
+position = Vector2(17, 0)
 scale = Vector2(0.384, 0.27)
 texture = ExtResource("1_twv7y")
 
@@ -77,7 +84,21 @@ position = Vector2(533, 346)
 position = Vector2(427, 497)
 
 [node name="Player" parent="PlayerController" index="1"]
-position = Vector2(444, 664)
+position = Vector2(314, 678)
 scale = Vector2(0.2, 0.2)
+
+[node name="TrollSpawner" parent="." node_paths=PackedStringArray("final_target") instance=ExtResource("9_ld6d1")]
+position = Vector2(1632, 1028)
+active = true
+final_target = NodePath("../MysticTree")
+
+[node name="MysticTree" type="Node2D" parent="."]
+position = Vector2(977, 1028)
+script = ExtResource("10_45dnw")
+
+[node name="TreeBase" type="Sprite2D" parent="."]
+position = Vector2(1010, 870)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("12_8k4u6")
 
 [editable path="PlayerController"]

@@ -100,3 +100,6 @@ func _on_troll_back_area_body_exited(body: Node2D) -> void:
 	if body is Player:
 		var player: Player = body
 		player.sort_locks -= 1
+
+# func _on_vision_body_entered(body:Node2D) -> void:
+# 	pass # Replace with function body.
